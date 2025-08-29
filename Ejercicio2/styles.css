@@ -1,0 +1,15 @@
+html{
+    background-color: #F1E4E8;
+}
+body {
+    color: #2D2D34;
+    text-align: center;
+    margin:auto;
+    background-color: #CEB1BE;
+    padding: 5px 50px 5px 50px;
+    width: 600px;
+}
+ul{
+    text-align: left;
+    margin: auto;
+}

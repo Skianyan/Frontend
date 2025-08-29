@@ -1,0 +1,33 @@
+body {
+    color: darkgray;
+    text-align: center;
+    background-color: darkslategray;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-self: center;
+}
+#titulo{
+    color: lavender;
+    background-color: midnightblue;
+    align-self: center;
+    width: 600px;
+    padding: 10px;
+}
+
+hr{
+    flex-grow: 1;
+    width: 600px;
+}
+
+a{
+    color: darkgreen;
+    background-color: lightskyblue;
+    border-radius: 5px;
+    border: 2px solid teal;
+    box-shadow: 3px 3px 3px teal;
+    text-decoration: none;
+    align-self: center;
+    width: auto;
+    padding: 10px;
+}
