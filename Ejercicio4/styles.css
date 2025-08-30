@@ -1,16 +1,30 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
 body{
     background-color: #748067;
     text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
 }
-
+#head{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 header{
     background-color: #BBCEA8;
+}
+nav{
+    padding-bottom: 5px;
 }
 section{
     display: flex;
     flex-direction: column;
     background-color: #E3D87E;
     margin-bottom: 20px;
+    margin-top: 20px;
+    gap: 10px;
     padding-top: 10px;
     padding-bottom: 20px;
 }
@@ -29,10 +43,14 @@ section>h1{
     margin-right: auto;
 }
 article{
+    display: flex;
+    flex-direction: column;
     background-color: #F0EC57;
     color: #0B0A07;
     border-radius: 10px;
     padding: 10px;
+    min-width: 200px;
+    max-width: 300px;
 }
 table, th, td {
     border: 1px solid black;
@@ -43,4 +61,9 @@ ul{
     list-style-type: none;
     justify-content: center;
     gap: 50px;
+}
+img{
+    align-self: center;
+    margin: 10px;
+
 }
