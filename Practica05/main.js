@@ -42,12 +42,72 @@ console.log(longList);
 let calificaciones = [85, 92, 78, 96, 88, 73, 90, 87];
 
 // Encontrar la calificación más alta
-
+console.log(Math.max(...calificaciones));
 
 // Verificar si todos los estudiantes aprobaron (calificación >= 70)
-
+console.log(calificaciones.every(num => num >= 70)); 
 
 // Obtener solo las calificaciones sobresalientes (>= 90)
-
+console.log(calificaciones.filter(num => num >= 90));
 
 // Calcular el promedio de todas las calificaciones
+total = calificaciones.reduce((total, num) => total + num, 0);
+console.log(total / calificaciones.length);
+
+// Ejercicio 4: Organizador de Tareas
+
+// Estás desarrollando una app de productividad para organizar tareas diarias.
+
+let tareas = ['comprar víveres', 'llamar al dentista', 'terminar proyecto', 'hacer ejercicio'];
+
+let completadas = [false, true, false, false];
+
+// Tareas:
+
+// Agregar una nueva tarea ‘revisar emails’
+tareas.push('revisar emails')
+completadas.push(false)
+console.log(tareas);
+console.log(completadas);
+
+// Marcar la primera tarea como completada
+completadas.splice(0,1,true)
+console.log(completadas);
+
+// Obtener solo las tareas que NO están completadas
+console.log(completadas.filter(comp => comp == false)); 
+
+// Contar cuántas tareas faltan por completar
+faltantes = completadas.filter(comp => comp == false).length
+console.log(faltantes);
+
+// Ejercicio 5: Catálogo de Libros
+
+let libros = [
+
+    {titulo: 'Cien años de soledad', autor: 'García Márquez', año: 1967},
+
+    {titulo: '1984', autor: 'George Orwell', año: 1949},
+
+    {titulo: 'Don Quijote', autor: 'Cervantes', año: 1605},
+
+    {titulo: 'El principito', autor: 'Saint-Exupéry', año: 1943}
+
+];
+
+// Agregar un nuevo libro: {titulo: ‘Rayuela’, autor: ‘Cortázar’, año: 1963}
+libros.push({titulo: 'Rayuela', autor: 'Cortázar', año: 1963})
+console.log(libros);
+
+// Encontrar el libro más antiguo
+yrs = []
+libros.forEach(val => yrs.push(val.año))
+console.log(Math.min(...yrs));
+
+// Obtener todos los libros publicados después de 1950
+console.log(libros.filter(libro => libro.año > 1950));
+
+// Crear un array solo con los títulos de todos los libros
+nombres = []
+libros.forEach(val => nombres.push(val.titulo))
+console.log(nombres);
