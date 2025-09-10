@@ -1,69 +1,53 @@
-// const fruta = {
-//     nombre : 'manzana',
-//     color : 'rojo',
-//     precio : 20.5,
-//     quimicos : false,
-//     nutrientes : {
-//         vitaminaC : false,
-//         folato : false,
-//         biotina : false,
-//     }
-// }
+// Ejercicio 1: Sistema de Inventario de Tienda
+let productos = ['laptop', 'mouse', 'teclado', 'monitor'];
+let precios = [15000, 500, 800, 3000];
 
-// for (propiedad in fruta){
-//     console.log(`${propiedad} : con valor de ${fruta[propiedad]} ` );
-// }
+// 1. Agregar un nuevo producto 'webcam' con precio 1200
+productos.push("webcam")
+precios.push(1200)
+
+console.log(productos);
+console.log(precios);
+
+// 2. Encontrar si existe el producto 'mouse' en el inventario
+console.log(productos.find(val => val == "mouse"));
+
+// 3. Obtener todos los productos que cuestan menos de 1000 pesos
+let menoraMil = precios.filter(precio => precio < 1000);
+console.log(menoraMil);
+// 4. Calcular el precio total de todos los productos
+console.log(precios.reduce((total, num) => total + num, 0));
 
 
-// for(let key in fruta){
-//     if(fruta.hasOwnProperty(key)){
-//         if(typeof(fruta[key]) == 'object'){
-//             console.log(`${key} : {`);
-//             for(let property in fruta[key]){
-//                 console.log(`${property} : ${fruta[key][property]}`);    
-//             }
-//             console.log(`}`);
-//         }
-//         else{
-//             console.log(`${key} : ${fruta[key]}`);
-//         }
+// Ejercicio 2: Lista de Reproducción Musical
+let playlist = ['Bohemian Rhapsody', 'Hotel California', 'Imagine', 'Yesterday'];
 
-//     }
-// }
+//	Agregar ‘Stairway to Heaven’ al inicio de la playlist
+playlist.unshift("Stairway to heaven")
+console.log(playlist);
 
-const computadora = {
-    tipo: 'escritorio',
-    modelo: 'ASUS',
-    ram: '16',
-    procesador: 'Intel Core i5 8300i'
-}
-// notacion de punto
-console.log(computadora.procesador);
+//	Eliminar la última canción de la lista
+playlist.pop()
+console.log(playlist);
 
-// notacion de corchete
-console.log(computadora["ram"]);
+//	Verificar si ‘Imagine’ está en la playlist
+console.log(playlist.includes("Imagine")); 
 
-// acceso dinamico
-const prop = 'tipo'
-console.log(computadora[prop]);
+//	Crear una nueva playlist solo con las canciones que tienen más de 8 caracteres
+let longList = playlist.filter(song => song.length > 8)
+console.log(longList);
 
-//cambiar el valor
-computadora.ram = 32
-console.log(computadora.ram);
 
-computadora["procesador"] = "Intel i9 10500e"
-console.log(computadora['procesador']);
+// Ejercicio 3: Registro de Calificaciones
+let calificaciones = [85, 92, 78, 96, 88, 73, 90, 87];
 
-// borra propiedades
-delete computadora.modelo
+// Encontrar la calificación más alta
 
-//copia superficial
-const computadora2 = Object.assign({},computadora)
 
-console.log(computadora2);
+// Verificar si todos los estudiantes aprobaron (calificación >= 70)
 
-delete computadora.ram
-// spread operator ...
-const copiacompu = {...computadora}
 
-console.log(copiacompu);
+// Obtener solo las calificaciones sobresalientes (>= 90)
+
+
+// Calcular el promedio de todas las calificaciones
