@@ -81,18 +81,25 @@ console.log('Precio con descuento: ');
 console.log(mxnFormat.format(total - discountValue) + ' MXN'); 
 
 // 3. Verificar si hay suficiente stock para todos los productos del carrito
-function hasStock (item){
+// let stockComparison = []
+// let isEnough = carrito.forEach(item => {
+//     stockComparison.push(productos.find((producto) => producto.id === item.productoId).stock >= item.cantidad)
+// }
+// )
+// if (stockComparison.every(item => item === true)) {
+//     console.log("Hay stock suficiente");
+// }
 
+function hasEnoughStock (item){
+    return productos.find((producto) => producto.id === item.productoId).stock >= item.cantidad
 }
+function hasEnoughforCart (cart){
+        let compareToStock = cart.map(item => hasEnoughStock(item) === true)
+    return compareToStock.every(item => item === true)
+}
+console.log(hasEnoughforCart(carrito));
 
-let stockComparison = []
-let isEnough = carrito.forEach(item => {
-    stockComparison.push(productos.find((producto) => producto.id === item.productoId).stock >= item.cantidad)
-}
-)
-if (stockComparison.every(item => item === true)) {
-    console.log("Hay stock suficiente");
-}
+
 // 4. Generar un resumen detallado de la compra
 
 
