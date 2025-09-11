@@ -53,7 +53,7 @@ const mxnFormat = new Intl.NumberFormat('es-MX', {
 
 // 1. Calcular el total del carrito incluyendo todos los productos
 
-// old solution
+// solucion vieja
 // let total = 0
 // let returnTotal = carrito.forEach(item => {
 //     total = total + productos.find((producto) => 
@@ -81,6 +81,8 @@ console.log('Precio con descuento: ');
 console.log(mxnFormat.format(total - discountValue) + ' MXN'); 
 
 // 3. Verificar si hay suficiente stock para todos los productos del carrito
+
+// solucion vieja
 // let stockComparison = []
 // let isEnough = carrito.forEach(item => {
 //     stockComparison.push(productos.find((producto) => producto.id === item.productoId).stock >= item.cantidad)
@@ -90,17 +92,43 @@ console.log(mxnFormat.format(total - discountValue) + ' MXN');
 //     console.log("Hay stock suficiente");
 // }
 
+// Compara si hay suficiente de un item de un carrito
 function hasEnoughStock (item){
     return productos.find((producto) => producto.id === item.productoId).stock >= item.cantidad
 }
+// Compara si hay suficiente de todos los items de un carrito
 function hasEnoughforCart (cart){
         let compareToStock = cart.map(item => hasEnoughStock(item) === true)
     return compareToStock.every(item => item === true)
 }
+
 console.log(hasEnoughforCart(carrito));
 
-
 // 4. Generar un resumen detallado de la compra
+function returnProductFromID(id) {
+    return productos.find((producto) => producto.id === id)
+}
 
+function resumenDeCompra (cart) {
+    cart.forEach(item => {
+        const product = returnProductFromID(item.productoId); 
+        const {nombre, precio} = product;
+        console.table(nombre, `     ${precio} x ${item.cantidad}`);
+    });
+    let total = calcularTotal(productos, cart)
+    console.log(`TOTAL:             ${total}`);
+}
+resumenDeCompra(carrito)
 
 // 5. Encontrar el producto más caro en el carrito
+function mostExpensiveIteminCart(cart) {
+    cartObjects = []
+    cart.forEach(item => {
+        const product = returnProductFromID(item.productoId);
+        cartObjects.push(product)
+    })
+    let expensiveItem = cartObjects.reduce((expensiveItem, product) =>
+        product.price < expensiveItem ? product : expensiveItem);
+    return expensiveItem
+}
+console.log(mostExpensiveIteminCart(carrito));
