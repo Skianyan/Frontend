@@ -19,23 +19,65 @@ function calcularPromedio(estudiante){
 }
 
 function calcularPromedioTotal(estudiantes){
-    let totalPromedio
-    estudiantes.forEach(element => {
-        
+    let totalPromedio = []
+    estudiantes.forEach(estudiante => {
+        promEstudiante = calcularPromedio(estudiante)
+        totalPromedio.push(promEstudiante)
     });
+    return totalPromedio.reduce((total,item) => total + item, 0) / totalPromedio.length
 }
 
-console.log(calcularPromedio({id: 1, nombre: "Ana García", edad: 20, carrera: "Ingeniería", semestre: 6, 
-        calificaciones: [95, 87, 92, 89, 94], asistencia: 95, beca: false})); 
-
+console.log(calcularPromedioTotal(estudiantes)); 
 
 // 2. Identificar estudiantes candidatos a beca (promedio >= 90 y asistencia >= 95)
-
+function candidatosABecar(estudiantes){
+    return estudiantes.filter(estudiante => (estudiante.asistencia >= 95 && calcularPromedio(estudiante) >= 90) )
+}
+console.log(candidatosABecar(estudiantes));
 
 // 3. Agrupar estudiantes por carrera y calcular el promedio por carrera
+function promEstudiantesPorCarrera(estudiantes){
+    const resultado = {};
+    
+    estudiantes.forEach(estudiante => {
+        const carrera = estudiante.carrera;
+        const promedioEstudiante = calcularPromedio(estudiante)
+        
+        if (!resultado[carrera]) {
+            resultado[carrera] = {
+                totalPromedio: 0,
+                cantidad: 0,
+                promedio: 0
+            };
+        }
+        
+        resultado[carrera].totalPromedio += promedioEstudiante;
+        resultado[carrera].cantidad++;
+        resultado[carrera].promedio = resultado[carrera].totalPromedio / resultado[carrera].cantidad;
+    });
+    
+    return resultado;
+}
 
+const promediosFinales = promEstudiantesPorCarrera(estudiantes);
+console.log("Promedios por carrera:");
+for (const carrera in promediosFinales) {
+    console.log(`${carrera}: ${promediosFinales[carrera].promedio}`);
+}
 
 // 4. Encontrar al estudiante con mejor rendimiento general
-
+function estudianteConMejorRendimiento(estudiantes){
+    let mejorEstudiante = estudiantes.reduce((mejor, estudiante) =>
+        estudiante.asistencia + calcularPromedio(estudiante) > mejor.asistencia + calcularPromedio(mejor) 
+        ? estudiante : mejor
+    )
+    return mejorEstudiante
+}
+console.log(estudianteConMejorRendimiento(estudiantes));
 
 // 5. Generar una lista de estudiantes en riesgo académico (promedio < 80)
+function riesgoAcademico(estudiantes){
+    return estudiantes.filter(estudiante => (calcularPromedio(estudiante) < 80) )
+}
+
+console.log(riesgoAcademico(estudiantes));
