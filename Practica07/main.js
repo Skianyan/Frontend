@@ -81,3 +81,4 @@ function riesgoAcademico(estudiantes){
 }
 
 console.log(riesgoAcademico(estudiantes));
+
