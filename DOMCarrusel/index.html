@@ -11,12 +11,7 @@
         <h1>Mi Galería de Imágenes</h1>
         
         <div class="carousel">
-            <div class="carousel-images">
-                <img src="https://picsum.photos/600/400?random=1" alt="Imagen 1" class="carousel-image active">
-                <img src="https://picsum.photos/600/400?random=2" alt="Imagen 2" class="carousel-image">
-                <img src="https://picsum.photos/600/400?random=3" alt="Imagen 3" class="carousel-image">
-                <img src="https://picsum.photos/600/400?random=4" alt="Imagen 4" class="carousel-image">
-                <img src="https://picsum.photos/600/400?random=5" alt="Imagen 5" class="carousel-image">
+            <div id="carousel-images">
             </div>
                 <button class="carousel-button prev">❮</button>
                 <button class="carousel-button next">❯</button>
@@ -35,10 +30,23 @@
             <span id="timer" class="timer">0s</span>
         </div>
 
+        <div class="carousel-controls">
+            <p id="reset-btn" class="control-button">🔄 Reiniciar</p>
+            <p id="random-btn" class="control-button">🎲 Aleatorio</p>
+        </div>
+
+        <div class="image-index">
+            <p>Imagen:</p>
+            <p id="image-counter">1</p>
+
+        </div>
+
         <div class="carousel-speed">
             <button id="spdButton" class="control-button">Medium</button>
             <span id="spdToggle"></span>
         </div>
+
+        
     </div>
 
 
