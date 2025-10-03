@@ -45,15 +45,15 @@ function promEstudiantesPorCarrera(estudiantes){
         
         if (!resultado[carrera]) {
             resultado[carrera] = {
-                totalPromedio: 0,
+                puntTotal: 0,
                 cantidad: 0,
                 promedio: 0
             };
         }
         
-        resultado[carrera].totalPromedio += promedioEstudiante;
+        resultado[carrera].puntTotal += promedioEstudiante;
         resultado[carrera].cantidad++;
-        resultado[carrera].promedio = resultado[carrera].totalPromedio / resultado[carrera].cantidad;
+        resultado[carrera].promedio = resultado[carrera].puntTotal / resultado[carrera].cantidad;
     });
     
     return resultado;
