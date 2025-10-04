@@ -1,30 +1,30 @@
 // Seleccionar elementos del DOM
-const carrImages = document.getElementById('carousel-images');
+const images = document.querySelectorAll('.carousel-image');
 const prevButton = document.querySelector('.prev');
 const nextButton = document.querySelector('.next');
 
 // Variable para rastrear la imagen actual
 let currentIndex = 0;
 
-const imageData = [
-        {url: "https://picsum.photos/600/400?random=1", alt:"Imagen 1"},
-        {url: "https://picsum.photos/600/400?random=2", alt:"Imagen 2"},
-        {url: "https://picsum.photos/600/400?random=3", alt:"Imagen 3"},
-        {url: "https://picsum.photos/600/400?random=4", alt:"Imagen 4"},
-        {url: "https://picsum.photos/600/400?random=5", alt:"Imagen 5"}
-]
+// const imageData = [
+//         {url: "https://picsum.photos/600/400?random=1", alt:"Imagen 1"},
+//         {url: "https://picsum.photos/600/400?random=2", alt:"Imagen 2"},
+//         {url: "https://picsum.photos/600/400?random=3", alt:"Imagen 3"},
+//         {url: "https://picsum.photos/600/400?random=4", alt:"Imagen 4"},
+//         {url: "https://picsum.photos/600/400?random=5", alt:"Imagen 5"}
+// ]
 
-imageData.forEach((img) => {
-    const newImage = document.createElement('img')
-    newImage.src = img.url
-    newImage.alt = img.alt
-    newImage.classList.add('carousel-image')
-    console.log({carrImages});
-    carrImages.appendChild(newImage)
-});
-let images = [ ...carrImages ];
+// imageData.forEach((img) => {
+//     const newImage = document.createElement('img')
+//     newImage.src = img.url
+//     newImage.alt = img.alt
+//     newImage.classList.add('carousel-image')
+//     console.log({carrImages});
+//     carrImages.appendChild(newImage)
+// });
+// let images = [ ...carrImages ];
 
-carrImages.firstElementChild.classList.add('active')
+// carrImages.firstElementChild.classList.add('active')
 
 console.log('Total de imágenes:', images.length);
 console.log('Índice actual:', currentIndex);
@@ -201,15 +201,15 @@ addEventListener("keydown", (e) => {
 
 
 
-const spdButton = document.getElementById('spdButton');
+// const spdButton = document.getElementById('spdButton');
 
-const scrollSpeeds = ['slow','med','fast']
+// const scrollSpeeds = ['slow','med','fast']
 
-function toggleSpeed(speeds, index){
+// function toggleSpeed(speeds, index){
     
-}
+// }
 
-spdButton.addEventListener('click', spdButton);
+// spdButton.addEventListener('click', spdButton);
 
 
 
