@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div style="font-family: Arial, sans-serif; background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); min-height: 100vh; padding: 20px;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <h1 style="text-align: center; color: white; margin-bottom: 30px; font-size: 2.5em; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">⚔️ Generador de Personajes</h1>
+
+        <!-- FORMULARIO -->
+        <div style="background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); margin-bottom: 30px;">
+            <h2 style="margin-bottom: 20px;">Crear Nuevo Personaje</h2>
+            <form id="characterForm">
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">Nombre del Personaje:</label>
+                    <input type="text" id="charName" required placeholder="Ej: Dragón de Fuego" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;">
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">Poder/Habilidad Principal:</label>
+                    <input type="text" id="charPower" required placeholder="Ej: Control de llamas" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;">
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">Nivel de Poder (1-100):</label>
+                    <input type="number" id="charLevel" min="1" max="100" required placeholder="Ej: 85" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;">
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">Rareza:</label>
+                    <select id="charRarity" required style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px;">
+                        <option value="common">Común</option>
+                        <option value="rare">Raro</option>
+                        <option value="epic">Épico</option>
+                        <option value="legendary">Legendario</option>
+                    </select>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">Descripción:</label>
+                    <textarea id="charDescription" required placeholder="Describe a tu personaje..." style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; resize: vertical; min-height: 80px;"></textarea>
+                </div>
+
+                <button type="submit" style="padding: 12px 30px; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; background: #2a5298; color: white;">✨ Crear Personaje</button>
+            </form>
+        </div>
+
+        <!-- FILTROS -->
+        <div style="background: white; padding: 20px; border-radius: 15px; margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+            <strong>Filtrar por rareza:</strong>
+            <button class="filter-btn" data-rarity="common" style="padding: 10px 20px; border: 2px solid #9e9e9e; background: white; border-radius: 8px; cursor: pointer; color: #9e9e9e;">Común</button>
+            <button class="filter-btn" data-rarity="rare" style="padding: 10px 20px; border: 2px solid #2196F3; background: white; border-radius: 8px; cursor: pointer; color: #2196F3;">Raro</button>
+            <button class="filter-btn" data-rarity="epic" style="padding: 10px 20px; border: 2px solid #9C27B0; background: white; border-radius: 8px; cursor: pointer; color: #9C27B0;">Épico</button>
+            <button class="filter-btn" data-rarity="legendary" style="padding: 10px 20px; border: 2px solid #FF9800; background: white; border-radius: 8px; cursor: pointer; color: #FF9800;">Legendario</button>
+            <button class="filter-btn" data-rarity="all" style="padding: 10px 20px; border: 2px solid #ddd; background: white; border-radius: 8px; cursor: pointer;">Todos</button>
+
+            <div style="background: rgba(255,255,255,0.9); padding: 15px; border-radius: 8px; margin-left: auto;">
+                Total de personajes: <strong id="totalCount">0</strong>
+            </div>
+        </div>
+
+        <!-- CONTENEDOR DE TARJETAS -->
+        <div id="cardsContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
+            <div style="text-align: center; color: white; padding: 60px 20px; font-size: 1.2em; opacity: 0.8; grid-column: 1/-1;">
+                No hay personajes aún. ¡Crea tu primer personaje!
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
