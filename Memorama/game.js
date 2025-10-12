@@ -1,5 +1,12 @@
+// ============================================
+// 🎮 JUEGO DE MEMORIA - PRÁCTICA DE JAVASCRIPT
+// ============================================
+
+// PASO 1: DECLARAR VARIABLES GLOBALES
+
 // 1.1 Array con 8 emojis diferentes para las cartas
 const emojis = ['🌌','🔮','🀞','⚖️','✨','🕯️','🕸️','🌕']
+
 // 1.2 Variables de estado del juego
 let cards = [];              
 let flippedCards = [];       
@@ -7,23 +14,247 @@ let matchedPairs = 0;
 let moves = 0;               
 let canFlip = true;          
 
-
-
+// PASO 2: FUNCIÓN PRINCIPAL - INICIALIZAR EL JUEGO
+// ============================================
 function initGame(){
-    const bodyelem = document.body;
-    const gameContainer = document.createElement('div')
-    gameContainer.id = 'game-container'
+    // 2.1 Crear el contenedor principal (#game-container)
+    const gameContainer = document.createElement('div'); // Usa: document.createElement('div')
+    gameContainer.id = 'game-container'; // Asigna el id 'game-container'
+    document.body.appendChild(gameContainer); // Agrega el contenedor al body
 
-    bodyelem.appendChild(gameContainer)
+    // 2.2 Llamar a las funciones para crear cada parte
     createHeader(gameContainer);
     createGameBoard(gameContainer);
     createButtons(gameContainer);
     createModal();
 
+    // 2.3 Iniciar el juego
     startNewGame();
 }
 
+// PASO 3: CREAR EL HEADER CON TÍTULO Y ESTADÍSTICAS
+// ============================================
 function createHeader(container){
-    const gameHeaderDiv = document.createElement('div')
-    const gameHeader = document.createElement('h1')
+    // 3.1 Crear div con clase 'game-header'
+    const gameHeaderDiv = document.createElement('div');
+
+    // 3.2 Crear h1 con el título '🧠 Juego de Memoria'
+    const gameTitle = document.createElement('h1');
+    gameTitle.textContent = '🧠 Juego de Memoria';
+
+    // 3.3 Crear div de estadísticas con clase 'stats'
+    const gameStats = document.createElement('div');
+    gameStats.innerHTML = `<span id="moves">0</span> movimientos | <span id="pairs">0/8</span> pares`;
+
+    // 3.4 Agregar todo al header y el header al container
+    gameHeaderDiv.appendChild(gameTitle);
+    gameHeaderDiv.appendChild(gameStats);
+    container.appendChild(gameHeaderDiv);
 }   
+
+// PASO 4: CREAR EL TABLERO DE JUEGO
+// ============================================
+function createGameBoard(container){
+    // 4.1 Crear div con clase 'game-board' e id 'game-board'
+    const gameBoardDiv = document.createElement('div');
+    gameBoardDiv.classList.add('game-board');
+    gameBoardDiv.id = 'game-board';
+
+    // 4.2 Agregar el tablero al container
+    container.appendChild(gameBoardDiv);
+}
+
+// PASO 5: CREAR BOTONES DE CONTROL
+// ============================================
+function createButtons(container){
+    // 5.1 Crear div con clase 'buttons'
+    const buttonDiv = document.createElement('div');
+    buttonDiv.classList.add('buttons')
+
+    // 5.2 Crear botón de reiniciar
+    const button = document.createElement('button');
+    button.textContent = '🔄 Reiniciar';
+    button.addEventListener("onclick", startNewGame); // onclick: debe llamar a startNewGame()
+
+    // 5.3 Agregar botón al div y el div al container
+    buttonDiv.appendChild(button);
+    container.appendChild(buttonDiv);
+}
+
+// PASO 6: CREAR MODAL DE VICTORIA
+// ============================================
+function createModal() {
+    // 6.1 Crear div con clase 'modal' e id 'victory-modal'
+    const modalDiv = document.createElement('div');
+    modalDiv.classList.add('modal');
+    modalDiv.id = 'victory-modal';
+
+    // 6.2 Crear div con clase 'modal-content'
+    const modalContent = document.createElement('div');
+    modalContent.classList.add('modal-content');
+
+    const modalCongrats = document.createElement('h2'); // - h2 con '🎉 ¡Felicidades!'
+    modalCongrats.textContent = '🎉 ¡Felicidades!';
+
+    const modalEndText = document.createElement('p');   // - p con 'Has completado el juego'
+    modalEndText.textContent = 'Has completado el juego';
+
+    const modalFinalMoves = document.createElement('p');// - p con id 'final-moves' (vacío por ahora)
+    modalFinalMoves.id = 'final-moves';
+
+    const closeGameButton = document.createElement('button'); // - Dos botones: uno para cerrar y otro para jugar de nuevo
+    closeGameButton.textContent = 'Cerrar';
+    closeGameButton.addEventListener("click", closeModal);
+
+    const newGameButton = document.createElement('button');
+    newGameButton.textContent = 'Nuevo Juego';
+    newGameButton.addEventListener("click", () => {
+        closeModal();
+        startNewGame();
+    });
+
+    // 6.3 Agregar modal-content al modal
+    modalContent.appendChild(modalCongrats);
+    modalContent.appendChild(modalEndText);
+    modalContent.appendChild(modalFinalMoves);
+    modalContent.appendChild(closeGameButton);
+    modalContent.appendChild(newGameButton);
+    modalDiv.appendChild(modalContent);
+
+    // Agregar modal al body
+    document.body.appendChild(modalDiv);
+}   
+
+// PASO 7: INICIAR NUEVO JUEGO
+// ============================================
+function startNewGame() {
+    // 7.1 Resetear todas las variables a su estado inicial
+    moves = 0;
+    matchedPairs = 0;
+    flippedCards = [];
+    canFlip = true;
+
+    // 7.2 Actualizar las estadísticas en pantalla
+    updateStats();
+
+    // 7.3 Crear el array de cartas
+    cards = createCards();
+
+    // 7.4 Mezclar las cartas
+    shuffleCards(cards);
+
+    // 7.5 Renderizar el tablero
+    renderBoard();
+}
+
+// PASO 8: CREAR ARRAY DE CARTAS
+// ============================================
+function createCards(){
+    // 8.1 Duplicar el array de emojis para crear pares
+    const emojiCopy = [...emojis, ...emojis];
+
+    // 8.2 Crear un array de objetos carta
+    return emojiCopy.map((emoji, index) => ({
+        id: index,
+        emoji: emoji,
+        flipped: false,
+        matched: false
+    }));
+}
+
+// PASO 9: MEZCLAR CARTAS (Algoritmo de Fisher-Yates)
+// ============================================
+function shuffleCards(array) {
+    // 9.1 Implementar el algoritmo de Fisher-Yates
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+// PASO 10: RENDERIZAR EL TABLERO
+// ============================================
+function renderBoard() {
+    // 10.1 Obtener el elemento del tablero
+    const board = document.getElementById('game-board');
+
+    // 10.2 Limpiar el tablero (innerHTML = '')
+    board.innerHTML = '';
+
+    // 10.3 Para cada carta en el array cards:
+    cards.forEach(card => {
+        const cardDiv = document.createElement('div'); // - Crear div con clase 'card'
+        cardDiv.classList.add('card');
+        cardDiv.dataset.id = card.id; // - Agregar atributo data-id con el id de la carta
+        cardDiv.textContent = card.flipped || card.matched ? card.emoji : '❓'; // - Crear el contenido de la carta (emoji oculto)
+        cardDiv.addEventListener('click', () => flipCard(card.id)); // - Agregar event listener de click que llame a flipCard(card.id)
+        board.appendChild(cardDiv); // - Agregar la carta al tablero
+    });
+}
+
+// PASO 11: VOLTEAR UNA CARTA
+// ============================================
+function flipCard(cardId) {
+    // 11.1 VALIDACIONES (return si alguna es verdadera)
+    if (!canFlip) return;   // - Si canFlip es false
+
+    // 11.2 Buscar la carta en el array
+    const card = cards.find(c => c.id === cardId);
+
+    if (card.flipped || card.matched) return; // - Si la carta ya está volteada o emparejada
+    
+    // 11.3 Voltear la carta
+    card.flipped = true; // - Cambiar card.flipped a true
+    flippedCards.push(card); // - Agregar la carta al array flippedCards
+    renderBoard(); 
+
+    
+    if (flippedCards.length === 2) { // - Si ya hay 2 cartas volteadas
+        canFlip = false; 
+        moves++;
+        updateStats();
+        setTimeout(checkMatch, 800);
+    }
+}
+
+function checkMatch() {
+    const [card1, card2] = flippedCards;
+    if (card1.emoji === card2.emoji) {
+        card1.matched = card2.matched = true;
+        matchedPairs++;
+        updateStats();
+        if (matchedPairs === emojis.length) showVictory();
+    } else {
+        card1.flipped = card2.flipped = false;
+    }
+    flippedCards = [];
+    canFlip = true;
+    renderBoard();
+}
+
+// PASO 13: ACTUALIZAR ESTADÍSTICAS
+function updateStats() {
+    document.getElementById('moves').textContent = moves;
+    document.getElementById('pairs').textContent = `${matchedPairs}/${emojis.length}`;
+}
+
+// PASO 14: MOSTRAR MODAL DE VICTORIA
+function showVictory() {
+    const modal = document.getElementById('victory-modal');
+    const finalMoves = document.getElementById('final-moves');
+    finalMoves.textContent = `Lo completaste en ${moves} movimientos.`;
+    modal.classList.add('show');
+}
+
+// PASO 15: CERRAR MODAL
+function closeModal() {
+    const modal = document.getElementById('victory-modal');
+    modal.classList.remove('show');
+}
+
+// PASO 16: INICIAR EL JUEGO AL CARGAR LA PÁGINA
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initGame);
+} else {
+    initGame();
+}
