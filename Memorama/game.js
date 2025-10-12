@@ -74,7 +74,7 @@ function createButtons(container){
     // 5.2 Crear botón de reiniciar
     const button = document.createElement('button');
     button.textContent = '🔄 Reiniciar';
-    button.addEventListener("onclick", startNewGame); // onclick: debe llamar a startNewGame()
+    button.addEventListener("click", startNewGame); // onclick: debe llamar a startNewGame()
 
     // 5.3 Agregar botón al div y el div al container
     buttonDiv.appendChild(button);
@@ -186,10 +186,18 @@ function renderBoard() {
         const cardDiv = document.createElement('div'); // - Crear div con clase 'card'
         cardDiv.classList.add('card');
         cardDiv.dataset.id = card.id; // - Agregar atributo data-id con el id de la carta
+
+    //　(11.4) - Agregar clase 'flipped' al elemento HTML
+        if (card.flipped) cardDiv.classList.add('flipped');
+        if (card.matched) cardDiv.classList.add('matched');
+
         cardDiv.textContent = card.flipped || card.matched ? card.emoji : '❓'; // - Crear el contenido de la carta (emoji oculto)
         cardDiv.addEventListener('click', () => flipCard(card.id)); // - Agregar event listener de click que llame a flipCard(card.id)
         board.appendChild(cardDiv); // - Agregar la carta al tablero
     });
+
+
+    
 }
 
 // PASO 11: VOLTEAR UNA CARTA
@@ -197,64 +205,86 @@ function renderBoard() {
 function flipCard(cardId) {
     // 11.1 VALIDACIONES (return si alguna es verdadera)
     if (!canFlip) return;   // - Si canFlip es false
-
-    // 11.2 Buscar la carta en el array
     const card = cards.find(c => c.id === cardId);
+    if (card.flipped || card.matched) return;
 
-    if (card.flipped || card.matched) return; // - Si la carta ya está volteada o emparejada
-    
-    // 11.3 Voltear la carta
     card.flipped = true; // - Cambiar card.flipped a true
     flippedCards.push(card); // - Agregar la carta al array flippedCards
-    renderBoard(); 
+    console.log(card);
+    // card.classList.add('flipped')
+    renderBoard(); // - Agregar clase 'flipped' al elemento HTML
 
-    
     if (flippedCards.length === 2) { // - Si ya hay 2 cartas volteadas
-        canFlip = false; 
+        canFlip = false;
         moves++;
         updateStats();
         setTimeout(checkMatch, 800);
     }
 }
 
+// PASO 12: VERIFICAR SI HAY COINCIDENCIA
+// ============================================
 function checkMatch() {
+    canFlip = false;
     const [card1, card2] = flippedCards;
+
+    // 12.1 Si los emojis coinciden:
     if (card1.emoji === card2.emoji) {
-        card1.matched = card2.matched = true;
-        matchedPairs++;
-        updateStats();
-        if (matchedPairs === emojis.length) showVictory();
+        setTimeout(() => {}, 500); // Esperar 500ms y luego:
+        card1.matched = card2.matched = true; // - Marcar ambas cartas como matched
+        matchedPairs++;    // - Incrementar matchedPairs
+        flippedCards = []; // - Limpiar flippedCards
+        updateStats();     // - Actualizar stats
+        canFlip = true;
+        if (matchedPairs === emojis.length) showVictory(); // - Si matchedPairs === emojis.length, mostrar victoria
+    // 12.2 Si NO coinciden:
     } else {
-        card1.flipped = card2.flipped = false;
+        setTimeout(() => {}, 1000); // Esperar 1000ms y luego:
+        card1.flipped = card2.flipped = false; // - Cambiar flipped a false en ambas cartas
+        flippedCards = []; // - Limpiar flippedCards 
+        canFlip = true; // - Permitir voltear de nuevo
     }
-    flippedCards = [];
-    canFlip = true;
     renderBoard();
 }
 
 // PASO 13: ACTUALIZAR ESTADÍSTICAS
+// ============================================
 function updateStats() {
+    // 13.1 Actualizar el texto de #moves con el valor de moves
     document.getElementById('moves').textContent = moves;
+
+    // 13.2 Actualizar el texto de #pairs con
     document.getElementById('pairs').textContent = `${matchedPairs}/${emojis.length}`;
 }
 
 // PASO 14: MOSTRAR MODAL DE VICTORIA
+// ============================================
 function showVictory() {
+    // 14.1 Obtener el modal
     const modal = document.getElementById('victory-modal');
+
+    // 14.2 Actualizar el texto de #final-moves
     const finalMoves = document.getElementById('final-moves');
-    finalMoves.textContent = `Lo completaste en ${moves} movimientos.`;
+    finalMoves.textContent = `Lo completaste en ${moves} movimientos.`; // Debe mostrar: 'Lo completaste en X movimientos'
+
+    // 14.3 Agregar clase 'show' al modal
     modal.classList.add('show');
 }
 
 // PASO 15: CERRAR MODAL
+// ============================================
 function closeModal() {
+    // 15.1 Obtener el modal y remover la clase 'show'
     const modal = document.getElementById('victory-modal');
     modal.classList.remove('show');
 }
 
 // PASO 16: INICIAR EL JUEGO AL CARGAR LA PÁGINA
-if (document.readyState === 'loading') {
+// ============================================
+
+// 16.1 Verificar si el DOM está listo
+if (document.readyState === 'loading') { // Si document.readyState === 'loading', usar addEventListener
     document.addEventListener('DOMContentLoaded', initGame);
-} else {
-    initGame();
+} else { // Si no, llamar directamente a initGame()
+    initGame(); 
 }
